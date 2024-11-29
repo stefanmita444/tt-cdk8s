@@ -2,7 +2,8 @@ name: Deploy Updated Image to GKE
 
 on:
   workflow_dispatch:
-  push: [ main ]
+  push:
+    branches: [ main ]
   repository_dispatch:
     types:
       - update-image
