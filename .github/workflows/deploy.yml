@@ -20,10 +20,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Install Gcloud Components
-        run: |
-          gcloud components install kubectl
-
       # Step 3: Configure kubectl for GKE
       - name: Configure kubectl with GKE Credentials
         run: |
@@ -35,6 +31,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+
+      - name: Install Gcloud Components
+        run: |
+          gcloud components install kubectl
 
       # Step 5: Install CDK8s CLI
       - name: Install CDK8s CLI
