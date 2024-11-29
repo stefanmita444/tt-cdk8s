@@ -10,22 +10,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      # Step 1: Checkout CDK8s Repository
+      - name: Checkout CDK8s Code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      # Step 2: Authenticate with Google Cloud
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Step 3: Configure kubectl for GKE
+      - name: Configure kubectl with GKE Credentials
+        run: |
+          gcloud container clusters get-credentials <cluster-name> --region <region> --project <project-id>
+          kubectl config current-context
+
+      # Step 4: Set Up Node.js for CDK8s
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
+      # Step 5: Install CDK8s CLI
       - name: Install CDK8s CLI
         run: npm install -g cdk8s-cli
 
-      - name: Parse Image Reference
-        id: parse-image
-        run: echo "IMAGE_REF=${{ github.event.client_payload.image }}" >> $GITHUB_ENV
-
-      - name: Update Deployment
+      # Step 6: Generate Kubernetes Manifests with CDK8s
+      - name: Synthesize CDK8s Manifests
         run: |
-          cdk8s synth --context image_tag=${IMAGE_REF}
-          kubectl apply -f dist/
+          cdk8s synth --context image_tag=${{ github.event.client_payload.image }}
+
+      # Step 7: Apply Kubernetes Manifests to GKE
+      - name: Deploy to GKE
+        run: kubectl apply -f dist/
