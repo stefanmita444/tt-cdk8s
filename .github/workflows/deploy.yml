@@ -33,33 +33,37 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      # Step 3: Configure kubectl for GKE
-      - name: Configure kubectl with GKE Credentials
-        run: |
-          gcloud container clusters get-credentials tt-us-central1 --region us-central1 --project stefan-work 
-          kubectl config set-credentials gke-user --auth-provider=external
-
-      # Step 4: Set Up Node.js for CDK8s
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      # Step 5: Install CDK8s CLI
-      - name: Install CDK8s CLI
-        run: npm install -g cdk8s-cli
-
-      - name: Maven Build
-        run: mvn clean compile
-
-      # Step 6: Generate Kubernetes Manifests with CDK8s
-      - name: Synthesize CDK8s Manifests
-        run: |
-          cdk8s synth
-
-      - name: List Generated Manifests
-        run: ls -la dist/
-
-      # Step 7: Apply Kubernetes Manifests to GKE
-      - name: Deploy to GKE
-        run: kubectl apply -f dist/
+#      - name: Installing Kubectl
+#        run: |
+#          gcloud components install kubectl
+#
+#      # Step 3: Configure kubectl for GKE
+#      - name: Configure kubectl with GKE Credentials
+#        run: |
+#          gcloud container clusters get-credentials tt-us-central1 --region us-central1 --project stefan-work
+#          kubectl config set-credentials gke-user --auth-provider=external
+#
+#      # Step 4: Set Up Node.js for CDK8s
+#      - name: Install Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '16'
+#
+#      # Step 5: Install CDK8s CLI
+#      - name: Install CDK8s CLI
+#        run: npm install -g cdk8s-cli
+#
+#      - name: Maven Build
+#        run: mvn clean compile
+#
+#      # Step 6: Generate Kubernetes Manifests with CDK8s
+#      - name: Synthesize CDK8s Manifests
+#        run: |
+#          cdk8s synth
+#
+#      - name: List Generated Manifests
+#        run: ls -la dist/
+#
+#      # Step 7: Apply Kubernetes Manifests to GKE
+#      - name: Deploy to GKE
+#        run: kubectl apply -f dist/
