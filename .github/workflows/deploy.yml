@@ -35,13 +35,13 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Gcloud Components
-        run: |
-          gcloud components install kubectl
-
       # Step 5: Install CDK8s CLI
       - name: Install CDK8s CLI
         run: npm install -g cdk8s-cli
+
+      - name: Install Gcloud Components
+        run: |
+          gcloud components install kubectl
 
       - name: Maven Build
         run: mvn clean compile
