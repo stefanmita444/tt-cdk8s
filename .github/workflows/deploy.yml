@@ -27,7 +27,7 @@ jobs:
       - name: Configure kubectl with GKE Credentials
         run: |
           gcloud container clusters get-credentials tt-us-central1 --region us-central1 --project stefan-work 
-          kubectl config current-context
+          kubectl config set-credentials gke-user --auth-provider=external
 
       # Step 4: Set Up Node.js for CDK8s
       - name: Install Node.js
@@ -38,11 +38,6 @@ jobs:
       # Step 5: Install CDK8s CLI
       - name: Install CDK8s CLI
         run: npm install -g cdk8s-cli
-
-      # Step 3: Install gke-gcloud-auth-plugin
-      - name: Install gke-gcloud-auth-plugin
-        run: |
-          sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 
       - name: Maven Build
         run: mvn clean compile
