@@ -133,6 +133,7 @@ imports\k8s\KubeMutatingWebhookConfigurationProps$Builder.class
 imports\k8s\StatefulSetPersistentVolumeClaimRetentionPolicy$Builder.class
 imports\k8s\AggregationRule$Jsii$Proxy.class
 imports\k8s\KubeSelfSubjectRulesReviewProps.class
+com\mycompany\app\Main$1.class
 imports\k8s\EmptyDirVolumeSource$Jsii$Proxy.class
 imports\k8s\KubeResourceQuotaListProps.class
 imports\k8s\NodeAffinity$Builder.class

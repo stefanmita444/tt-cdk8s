@@ -36,10 +36,13 @@ jobs:
       - name: Install CDK8s CLI
         run: npm install -g cdk8s-cli
 
+      - name: Maven Build
+        run: mvn clean compile
+
       # Step 6: Generate Kubernetes Manifests with CDK8s
       - name: Synthesize CDK8s Manifests
         run: |
-          cdk8s synth --context image_tag=${{ github.event.client_payload.image }}
+          cdk8s synth
 
       - name: List Generated Manifests
         run: ls -la dist/

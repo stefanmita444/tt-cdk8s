@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: getting-started-my-deployment-c85252a6
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: new-app
+  template:
+    metadata:
+      labels:
+        app: new-app
+    spec:
+      containers:
+        - image: us-central1-docker.pkg.dev/stefan-work/techtonic-repo/techtonic-app:latest
+          name: app-container-test
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: getting-started-my-service-c84dc095
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: new-app
+  type: LoadBalancer
