@@ -17,6 +17,16 @@ jobs:
       - name: Checkout CDK8s Code
         uses: actions/checkout@v3
 
+      # Step 2: Install Google Cloud CLI
+      - name: Install Google Cloud CLI
+        run: |
+          curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-433.0.0-linux-x86_64.tar.gz
+          tar -xzf google-cloud-cli-433.0.0-linux-x86_64.tar.gz
+          ./google-cloud-sdk/install.sh -q
+          ./google-cloud-sdk/bin/gcloud components install gke-gcloud-auth-plugin
+          ./google-cloud-sdk/bin/gcloud components update --quiet
+          echo "PATH=$PATH:$(pwd)/google-cloud-sdk/bin" >> $GITHUB_ENV
+
       # Step 2: Authenticate with Google Cloud
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
