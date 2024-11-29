@@ -42,8 +42,7 @@ jobs:
       # Step 3: Install gke-gcloud-auth-plugin
       - name: Install gke-gcloud-auth-plugin
         run: |
-          gcloud components install gke-gcloud-auth-plugin
-          gcloud components update --quiet
+          sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 
       - name: Maven Build
         run: mvn clean compile
