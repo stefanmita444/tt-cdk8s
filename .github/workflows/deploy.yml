@@ -1,0 +1,33 @@
+name: Deploy Updated Image to GKE
+
+on:
+  repository_dispatch:
+    types:
+      - update-image
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install CDK8s CLI
+        run: npm install -g cdk8s-cli
+
+      - name: Parse Image Reference
+        id: parse-image
+        run: echo "IMAGE_REF=${{ github.event.client_payload.image }}" >> $GITHUB_ENV
+
+      - name: Update Deployment
+        run: |
+          cdk8s synth --context image_tag=${IMAGE_REF}
+          kubectl apply -f dist/
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
