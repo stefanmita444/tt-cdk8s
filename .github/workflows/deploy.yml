@@ -29,5 +29,3 @@ jobs:
         run: |
           cdk8s synth --context image_tag=${IMAGE_REF}
           kubectl apply -f dist/
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
