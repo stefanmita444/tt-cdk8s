@@ -33,10 +33,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Installing Kubectl
-        run: |
-          gcloud components install kubectl
-
       # Step 3: Configure kubectl for GKE
       - name: Configure kubectl with GKE Credentials
         run: |
