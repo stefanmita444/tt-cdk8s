@@ -23,7 +23,7 @@ jobs:
       # Step 3: Configure kubectl for GKE
       - name: Configure kubectl with GKE Credentials
         run: |
-          gcloud container clusters get-credentials <cluster-name> --region <region> --project <project-id>
+          gcloud container clusters get-credentials tt-us-central1 --region us-central1 --project stefan-work 
           kubectl config current-context
 
       # Step 4: Set Up Node.js for CDK8s
