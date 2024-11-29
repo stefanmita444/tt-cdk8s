@@ -41,6 +41,9 @@ jobs:
         run: |
           cdk8s synth --context image_tag=${{ github.event.client_payload.image }}
 
+      - name: List Generated Manifests
+        run: ls -la dist/
+
       # Step 7: Apply Kubernetes Manifests to GKE
       - name: Deploy to GKE
         run: kubectl apply -f dist/
